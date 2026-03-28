@@ -1,0 +1,15 @@
+ripgrep
+fd
+fzf
+git
+neovim
+jq
+gh
+tmux
+tree
+bat
+zoxide
+python
+node
+curl
+wget

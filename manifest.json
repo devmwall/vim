@@ -1,0 +1,63 @@
+{
+  "entries": [
+    {
+      "name": "shared-gitconfig",
+      "os": ["macos", "linux"],
+      "source": "dotfiles/shared/git/.gitconfig",
+      "targets": {
+        "macos": "~/.gitconfig",
+        "linux": "~/.gitconfig"
+      }
+    },
+    {
+      "name": "shared-nvim",
+      "os": ["macos", "linux", "windows"],
+      "source": "dotfiles/shared/nvim/init.lua",
+      "targets": {
+        "macos": "~/.config/nvim/init.lua",
+        "linux": "~/.config/nvim/init.lua",
+        "windows": "~/AppData/Local/nvim/init.lua"
+      }
+    },
+    {
+      "name": "macos-zsh",
+      "os": ["macos"],
+      "source": "dotfiles/macos/zsh/.zshrc",
+      "targets": {
+        "macos": "~/.zshrc"
+      }
+    },
+    {
+      "name": "linux-bash",
+      "os": ["linux"],
+      "source": "dotfiles/linux/bash/.bashrc",
+      "targets": {
+        "linux": "~/.bashrc"
+      }
+    },
+    {
+      "name": "linux-zsh",
+      "os": ["linux"],
+      "source": "dotfiles/linux/zsh/.zshrc",
+      "targets": {
+        "linux": "~/.zshrc"
+      }
+    },
+    {
+      "name": "windows-powershell-profile",
+      "os": ["windows"],
+      "source": "dotfiles/windows/powershell/Microsoft.PowerShell_profile.ps1",
+      "targets": {
+        "windows": "~/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
+      }
+    },
+    {
+      "name": "windows-gitconfig",
+      "os": ["windows"],
+      "source": "dotfiles/windows/git/.gitconfig.windows",
+      "targets": {
+        "windows": "~/.gitconfig"
+      }
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+eza
+gnu-sed
+coreutils
+watch
