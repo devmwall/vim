@@ -13,6 +13,7 @@ This repo is intentionally simple. It is **not** a dotfiles framework, sync engi
 - Detects current OS (`macos`, `linux`, or `windows`)
 - Bootstraps a curated set of CLI tools for the detected OS
 - Applies selected config files from this repo onto your machine
+- Captures selected config files from your machine back into this repo
 - Shows status of config entries relevant to your current OS
 
 ## Supported package managers
@@ -34,7 +35,9 @@ If the required package manager is missing, bootstrap exits with a clear error.
 │  ├─ bootstrap.sh
 │  ├─ bootstrap.ps1
 │  ├─ apply.sh
-│  └─ apply.ps1
+│  ├─ apply.ps1
+│  ├─ capture.sh
+│  └─ capture.ps1
 ├─ packages/
 │  ├─ common.txt
 │  ├─ macos.txt
@@ -63,16 +66,19 @@ python scripts/setup.py detect
 python scripts/setup.py status
 python scripts/setup.py bootstrap
 python scripts/setup.py apply
+python scripts/setup.py capture
 ```
 
 Convenience wrappers:
 
 ```bash
 bash scripts/apply.sh
+bash scripts/capture.sh
 ```
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/apply.ps1
+powershell -ExecutionPolicy Bypass -File scripts/capture.ps1
 ```
 
 ## Verify installed tools
@@ -87,5 +93,7 @@ git --version
 
 ## Important note
 
-This repo copies config files **from repo to machine only**.
-It does **not** sync machine changes back into the repo.
+`apply` copies config files from repo to machine.
+`capture` copies config files from machine to repo.
+
+There is no automatic or bidirectional sync engine: both directions are explicit, one-shot copy operations.

@@ -136,11 +136,51 @@ def cmd_apply() -> int:
     return 0
 
 
+def cmd_capture() -> int:
+    os_name = detect_os()
+    manifest = load_manifest()
+
+    captured = 0
+    skipped = 0
+
+    print(f"[info] Detected OS: {os_name}")
+
+    for entry in manifest["entries"]:
+        if os_name not in entry.get("os", []):
+            continue
+
+        name = entry.get("name", "<unnamed>")
+        source_rel = entry.get("source")
+        targets = entry.get("targets", {})
+        target_raw = targets.get(os_name)
+
+        if not source_rel or not target_raw:
+            print(f"[skip] {name}: missing source or target in manifest")
+            skipped += 1
+            continue
+
+        source_abs = (REPO_ROOT / source_rel).resolve()
+        target_abs = expand_user_path(target_raw)
+
+        if not target_abs.exists():
+            print(f"[skip] {name}: target file does not exist: {target_abs}")
+            skipped += 1
+            continue
+
+        source_abs.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(target_abs, source_abs)
+        print(f"[capture] {name}: {target_abs} -> {source_abs}")
+        captured += 1
+
+    print(f"[done] captured={captured}, skipped={skipped}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Development machine setup tool")
     parser.add_argument(
         "command",
-        choices=["detect", "status", "bootstrap", "apply"],
+        choices=["detect", "status", "bootstrap", "apply", "capture"],
         help="Command to run",
     )
     return parser
@@ -159,6 +199,8 @@ def main() -> int:
             return cmd_bootstrap()
         if args.command == "apply":
             return cmd_apply()
+        if args.command == "capture":
+            return cmd_capture()
     except Exception as exc:
         print(f"[error] {exc}", file=sys.stderr)
         return 1

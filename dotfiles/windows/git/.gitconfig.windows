@@ -1,12 +1,6 @@
 [user]
-    name = Your Name
-    email = you@example.com
-
-[init]
-    defaultBranch = main
-
-[core]
-    editor = nvim
-
-[push]
-    autoSetupRemote = true
+	name = devmwall
+	email = me@mattwall.dev
+[safe]
+	directory = C:/Code/utilities
+	directory = C:/Code/demos
