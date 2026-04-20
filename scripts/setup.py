@@ -127,9 +127,14 @@ def cmd_apply() -> int:
             skipped += 1
             continue
 
-        target_abs.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(source_abs, target_abs)
-        print(f"[copy] {name}: {source_abs} -> {target_abs}")
+        if source_abs.is_dir():
+            target_abs.mkdir(parents=True, exist_ok=True)
+            shutil.copytree(source_abs, target_abs, dirs_exist_ok=True)
+            print(f"[copy-dir] {name}: {source_abs} -> {target_abs}")
+        else:
+            target_abs.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source_abs, target_abs)
+            print(f"[copy] {name}: {source_abs} -> {target_abs}")
         copied += 1
 
     print(f"[done] copied={copied}, skipped={skipped}")
@@ -167,9 +172,14 @@ def cmd_capture() -> int:
             skipped += 1
             continue
 
-        source_abs.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(target_abs, source_abs)
-        print(f"[capture] {name}: {target_abs} -> {source_abs}")
+        if target_abs.is_dir():
+            source_abs.mkdir(parents=True, exist_ok=True)
+            shutil.copytree(target_abs, source_abs, dirs_exist_ok=True)
+            print(f"[capture-dir] {name}: {target_abs} -> {source_abs}")
+        else:
+            source_abs.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(target_abs, source_abs)
+            print(f"[capture] {name}: {target_abs} -> {source_abs}")
         captured += 1
 
     print(f"[done] captured={captured}, skipped={skipped}")
