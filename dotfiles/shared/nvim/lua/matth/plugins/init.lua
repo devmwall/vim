@@ -1,16 +1,32 @@
 return {
   {
+    "ellisonleao/gruvbox.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.o.background = "dark"
+      vim.g.gruvbox_contrast_dark = "hard"
+      vim.cmd.colorscheme("gruvbox")
+    end,
+  },
+  {
     "nvim-treesitter/nvim-treesitter",
     branch = "master",
     lazy = false,
     build = ":TSUpdate",
     config = function()
+      local ok_install, install = pcall(require, "nvim-treesitter.install")
+      if ok_install then
+        install.compilers = { "zig", "cl", "gcc", "clang" }
+      end
+
       local ok, configs = pcall(require, "nvim-treesitter.configs")
       if not ok then
         return
       end
 
       configs.setup({
+        ensure_installed = { "go", "lua", "vim", "vimdoc", "query" },
         highlight = { enable = true },
         indent = { enable = true },
       })
